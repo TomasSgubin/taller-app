@@ -3,24 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Taller — Fichas de clientes</title>
+<title>Suspensión Walter — Clientes</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F3F1EC;
+    --bg: #F4F4F4;
     --panel: #FFFFFF;
-    --panel-2: #FAF8F3;
-    --ink: #2A2721;
-    --ink-soft: #6B655A;
-    --ink-faint: #9C9689;
-    --line: #DDD7C8;
-    --line-strong: #C7BFAB;
-    --accent: #B5762A;
-    --accent-ink: #6E440F;
-    --accent-bg: #F5E4CC;
-    --danger: #A6432D;
-    --danger-bg: #F5DCD4;
-    --danger-ink: #6E2C1B;
+    --panel-2: #F1F1F1;
+    --ink: #1F1F1F;
+    --ink-soft: #55575A;
+    --ink-faint: #8B8D90;
+    --line: #E2E2E2;
+    --line-strong: #C9C9CB;
+    --accent: #C8102E;
+    --accent-ink: #8A0A1F;
+    --accent-bg: #F9DDE1;
+    --danger: #C8102E;
+    --danger-bg: #F9DDE1;
+    --danger-ink: #8A0A1F;
     --ok: #4D6E3A;
     --ok-bg: #E4EBD9;
     --radius: 10px;
@@ -30,19 +33,19 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #1C1A16; --panel: #262319; --panel-2: #2C2921; --ink: #EFEAE0;
-      --ink-soft: #B3AB9B; --ink-faint: #8A8272; --line: #3B372C; --line-strong: #4C4737;
-      --accent: #D89B4E; --accent-ink: #F5D9AE; --accent-bg: #3E3020;
-      --danger: #D97F63; --danger-bg: #402620; --danger-ink: #F0BCAB;
+      --bg: #161616; --panel: #212121; --panel-2: #2A2A2A; --ink: #F2F2F2;
+      --ink-soft: #B5B7BA; --ink-faint: #85878B; --line: #333333; --line-strong: #454545;
+      --accent: #E5384F; --accent-ink: #FFD3D9; --accent-bg: #3D1A20;
+      --danger: #E5384F; --danger-bg: #3D1A20; --danger-ink: #FFD3D9;
       --ok: #8FB374; --ok-bg: #26301F;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #1C1A16; --panel: #262319; --panel-2: #2C2921; --ink: #EFEAE0;
-    --ink-soft: #B3AB9B; --ink-faint: #8A8272; --line: #3B372C; --line-strong: #4C4737;
-    --accent: #D89B4E; --accent-ink: #F5D9AE; --accent-bg: #3E3020;
-    --danger: #D97F63; --danger-bg: #402620; --danger-ink: #F0BCAB;
-    --ok: #8FB374; --ok-bg: #26301F;
+    --bg: #161616; --panel: #212121; --panel-2: #2A2A2A; --ink: #F2F2F2;
+      --ink-soft: #B5B7BA; --ink-faint: #85878B; --line: #333333; --line-strong: #454545;
+      --accent: #E5384F; --accent-ink: #FFD3D9; --accent-bg: #3D1A20;
+      --danger: #E5384F; --danger-bg: #3D1A20; --danger-ink: #FFD3D9;
+      --ok: #8FB374; --ok-bg: #26301F;
   }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
   * { box-sizing: border-box; }
@@ -56,8 +59,8 @@
     border-bottom: 1px solid var(--line); padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 12px;
   }
   .brand-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .brand { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 8px; }
-  .brand .mark { display: inline-block; width: 9px; height: 9px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); position: relative; top: -1px; }
+  .brand { font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif; text-transform: uppercase; font-size: 21px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: baseline; gap: 8px; }
+  .brand .mark { display: inline-block; width: 9px; height: 9px; background: var(--accent); border-radius: 1px; position: relative; top: -1px; }
   .subtitle { font-size: 12.5px; color: var(--ink-faint); margin-top: 2px; }
   .logout-btn { background: none; border: none; color: var(--ink-faint); font-size: 12.5px; text-decoration: underline; cursor: pointer; padding: 4px; }
   .searchbar { margin-top: 12px; position: relative; }
@@ -91,12 +94,12 @@
   .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
   .backbtn { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--ink-soft); font-size: 14px; cursor: pointer; padding: 6px 0; margin-bottom: 6px; }
   .detail-header { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-  .detail-name { font-size: 20px; font-weight: 700; }
+  .detail-name { font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif; font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }
   .detail-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
   .detail-row a { color: var(--accent); text-decoration: none; }
   .detail-actions { display: flex; gap: 8px; margin-top: 14px; }
   .section-head { display: flex; justify-content: space-between; align-items: center; margin: 22px 0 10px; }
-  .section-head h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); font-weight: 700; margin: 0; }
+  .section-head h2 { font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); font-weight: 700; margin: 0; }
   .car-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 10px; cursor: pointer; }
   .car-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .car-title { font-weight: 600; font-size: 15.5px; }
@@ -120,7 +123,7 @@
   @media (min-width: 600px) { .overlay { align-items: center; } }
   .sheet { background: var(--panel); width: 100%; max-width: 480px; border-radius: 16px 16px 0 0; padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px)); max-height: 88vh; overflow-y: auto; }
   @media (min-width: 600px) { .sheet { border-radius: 16px; max-height: 80vh; } }
-  .sheet h3 { margin: 0 0 16px; font-size: 17px; }
+  .sheet h3 { font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif; margin: 0 0 16px; font-size: 19px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
   .field { margin-bottom: 13px; }
   .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
   .field input, .field textarea {
@@ -198,7 +201,7 @@
   function renderLogin(errorMsg){
     document.getElementById('app').innerHTML =
       '<div class="login-wrap"><div class="login-box">' +
-        '<div class="brand"><span class="mark"></span>Taller</div>' +
+        '<div class="brand"><span class="mark"></span>Suspensión Walter</div>' +
         '<div class="login-sub">Ingresá con tu cuenta</div>' +
         '<div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" autocomplete="username"></div>' +
         '<div class="field"><label for="loginPass">Contraseña</label><input id="loginPass" type="password" autocomplete="current-password"></div>' +
@@ -229,7 +232,7 @@
     document.getElementById('app').innerHTML =
       '<header>' +
         '<div class="brand-row">' +
-          '<div><div class="brand"><span class="mark"></span>Taller</div><div class="subtitle" id="clientCount">0 clientes</div></div>' +
+          '<div><div class="brand"><span class="mark"></span>Suspensión Walter</div><div class="subtitle" id="clientCount">0 clientes</div></div>' +
           '<button class="logout-btn" id="logoutBtn">Cerrar sesión</button>' +
         '</div>' +
         '<div class="searchbar">' +
